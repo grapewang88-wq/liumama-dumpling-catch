@@ -69,7 +69,7 @@ img,.pix{image-rendering:pixelated;image-rendering:crisp-edges}
   display:flex;align-items:center;justify-content:center;cursor:pointer;
 }
 .btn2:active{background-image:url("assets/btn-ghost-press.png")}
-.btn2.sm{width:280px;height:100px;font-size:34px}
+.btn2.sm{width:280px;height:88px;font-size:32px}   /* 840x264 的 1/3，等比缩放不变形 */
 /* 绝对定位的按钮用显式 left 居中：动画会覆盖 transform，不能靠 translateX(-50%) */
 #btn-start{left:260px}
 #btn-board{left:330px}
@@ -201,7 +201,7 @@ img,.pix{image-rendering:pixelated;image-rendering:crisp-edges}
 #playfield{position:absolute;left:0;top:0;width:1080px;height:1920px;overflow:hidden;z-index:1}
 .hud,#timebar-bg,#target-card{z-index:5}
 #made,#countdown,.mvbtn{z-index:8}
-.item{position:absolute;left:0;top:0;width:140px;height:140px;background-size:100% 100%;
+.item{position:absolute;left:0;top:0;width:160px;height:160px;background-size:100% 100%;
   background-repeat:no-repeat;image-rendering:pixelated;will-change:transform}
 .item.gold{filter:drop-shadow(0 0 18px rgba(255,206,74,.95))}
 
@@ -637,7 +637,9 @@ const CONFIG = {
   },
 
   skin: { width: 320, height: 160, top: 1480, follow: 20, btnSpeed: 1500 },
-  field: { left: 60, right: 1020, itemSize: 140, spawnY: -170 }
+  /* itemSize 跟素材尺寸保持一致（160），像素才能 1:1 对齐不糊。
+     接取判定只看饺子皮的宽度，跟这个值无关，所以改它不影响难度 */
+  field: { left: 60, right: 1020, itemSize: 160, spawnY: -190 }
 };
 
 /* 11 种食材 —— id 要和 assets/items/item-<id>.png 对上 */
@@ -928,8 +930,8 @@ function onCatch(it){
   if (it.gold){
     const add = S.coin;
     G.score += add; Sound.gold();
-    floatText(`+${add}`, it.x + 70, CONFIG.skin.top - 30, "plus big");
-    sparkles(it.x + 70, CONFIG.skin.top);
+    floatText(`+${add}`, it.x + CONFIG.field.itemSize/2, CONFIG.skin.top - 30, "plus big");
+    sparkles(it.x + CONFIG.field.itemSize/2, CONFIG.skin.top);
     puff(G.skinX, CONFIG.skin.top + 40);
     bumpSkin(false);
     removeItem(it); syncHud(); return;
@@ -942,8 +944,8 @@ function onCatch(it){
     G.score += add;
     G.prog[it.food] = (G.prog[it.food]||0) + 1;
     Sound.right();
-    floatText(`+${add}`, it.x + 70, CONFIG.skin.top - 30, "plus");
-    sparkles(it.x + 70, CONFIG.skin.top);
+    floatText(`+${add}`, it.x + CONFIG.field.itemSize/2, CONFIG.skin.top - 30, "plus");
+    sparkles(it.x + CONFIG.field.itemSize/2, CONFIG.skin.top);
     puff(G.skinX, CONFIG.skin.top + 40);
     bumpSkin(false);
     removeItem(it);
@@ -952,14 +954,14 @@ function onCatch(it){
   } else if (G.grace > 0){
     /* 免罚窗口内：上一个配方的余料，不扣分也不断连击 */
     Sound.drop();
-    floatText("换馅啦", it.x + 70, CONFIG.skin.top - 30, "");
+    floatText("换馅啦", it.x + CONFIG.field.itemSize/2, CONFIG.skin.top - 30, "");
     removeItem(it);
   } else {
     G.combo = 0; G.missed++;
     const add = S.miss;
     G.score = Math.max(0, G.score + add);
     Sound.wrong();
-    floatText(`${add}`, it.x + 70, CONFIG.skin.top - 30, "minus");
+    floatText(`${add}`, it.x + CONFIG.field.itemSize/2, CONFIG.skin.top - 30, "minus");
     bumpSkin(true);
     removeItem(it);
   }
