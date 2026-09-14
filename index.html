@@ -587,8 +587,9 @@ const CONFIG = {
 
   /* 掉落节奏：随时间从 start 线性过渡到 end，再乘 difficulty */
   fall: {
-    speedStart: 480, speedEnd: 760,     // px/s
-    gapStart: 0.50,  gapEnd: 0.26,      // 秒/个
+    speedStart: 560, speedEnd: 920,     // px/s（整体更快）
+    gapStart: 0.42,  gapEnd: 0.20,      // 秒/个（掉得更密）
+    rampSec: 20,                        // 多少秒爬到最快=提早提速，之后维持峰值
     maxOnScreen: 8,
     targetBias: 0.62,                   // 掉落物里属于当前配方的比例
     coinChance: 0.05,                  // 硬币出现概率
@@ -834,7 +835,7 @@ function recipeDone(){
 }
 
 /* ---------- 掉落 ---------- */
-function curveT(){ return clamp(G.t / Math.max(1, CONFIG.duration), 0, 1); }
+function curveT(){ return clamp(G.t / Math.max(1, CONFIG.fall.rampSec), 0, 1); }
 
 function spawn(){
   const p = curveT(), F = CONFIG.fall;
