@@ -71,8 +71,8 @@ img,.pix{image-rendering:pixelated;image-rendering:crisp-edges}
 .btn2:active{background-image:url("assets/btn-ghost-press.png")}
 .btn2.sm{width:280px;height:88px;font-size:32px}   /* 840x264 的 1/3，等比缩放不变形 */
 /* 绝对定位的按钮用显式 left 居中：动画会覆盖 transform，不能靠 translateX(-50%) */
-#btn-start{left:260px}
-#btn-board{left:330px}
+#btn-start{left:289px;width:502px;height:156px}
+#btn-board{left:380px;width:319px;height:94px;font-size:38px}
 
 /* ============================================================
    待机页
@@ -82,8 +82,8 @@ img,.pix{image-rendering:pixelated;image-rendering:crisp-edges}
 #brand{top:186px;left:40px;width:1000px;text-align:center;
   font-size:32px;font-weight:800;letter-spacing:14px;text-indent:14px;color:#F3DCA8;
   text-shadow:0 3px 0 rgba(50,24,10,.65), 0 0 18px rgba(30,14,4,.4)}
-#title-art{top:238px;left:34px;width:1012px;height:222px;
-  background:url("assets/title-catch.png") center/contain no-repeat;image-rendering:pixelated;
+#title-art{top:150px;left:492px;width:560px;height:344px;
+  background:url("assets/title-catch-v.png") right top/contain no-repeat;image-rendering:pixelated;
   animation:titlebob 3.4s ease-in-out infinite}
 @keyframes titlebob{0%,100%{transform:translateY(0)}50%{transform:translateY(-10px)}}
 
@@ -129,14 +129,16 @@ img,.pix{image-rendering:pixelated;image-rendering:crisp-edges}
 @keyframes coinshine{0%,100%{transform:scale(1) rotate(0)}50%{transform:scale(1.14) rotate(-8deg)}}
 
 /* 本机最高分：做成一块小牌子 */
-#best-line{top:1174px;left:230px;width:620px;height:78px;border-radius:39px;
-  background:rgba(255,244,214,.92);border:5px solid #5B9BD4;
-  box-shadow:0 6px 0 rgba(78,35,23,.22);
+#best-line{top:1195px;left:281px;width:518px;height:122px;border-radius:0;
+  background:url("assets/plank-best.png") center/100% 100% no-repeat;border:none;box-shadow:none;
   display:flex;align-items:center;justify-content:center;gap:14px;
-  font-size:30px;font-weight:800;letter-spacing:2px;color:#235E8C;
-  white-space:nowrap;overflow:hidden}
-#best-line b{font-size:40px;color:#1B6FC4;font-variant-numeric:tabular-nums;letter-spacing:0}
-#best-line .who{max-width:250px;overflow:hidden;text-overflow:ellipsis}
+  font-size:41px;font-weight:900;letter-spacing:2px;color:#FFF7E6;
+  text-shadow:0 3px 0 rgba(60,30,8,.75);white-space:nowrap;overflow:visible}
+#best-line .crown{width:70px;height:70px;image-rendering:pixelated;
+  filter:drop-shadow(0 3px 0 rgba(60,30,8,.5));margin-top:-4px}
+#best-line b{font-size:65px;color:#FFFFFF;font-variant-numeric:tabular-nums;letter-spacing:0;
+  text-shadow:0 3px 0 rgba(60,30,8,.8)}
+#best-line span{opacity:.96}
 
 /* ============================================================
    游戏页 HUD
@@ -388,7 +390,7 @@ img,.pix{image-rendering:pixelated;image-rendering:crisp-edges}
 .row.ph .nm{color:#4E86B8;font-weight:800;font-size:34px}
 .row.ph .sc,.row.ph .dp{color:#4E86B8}
 #board-empty{position:absolute;left:0;top:400px;width:920px;text-align:center;font-size:38px;color:#4E86B8;font-weight:800;display:none}
-#board-btns{top:1560px;left:0;width:1080px;display:flex;justify-content:center;gap:30px}
+#board-btns{top:1560px;left:0;width:1080px;display:flex;justify-content:center;align-items:center;gap:30px}
 
 /* 声音按钮：待机 / 结算 / 榜单三页常驻，游戏进行中隐藏（那 20 秒里顶栏要让给 HUD）
    底下垫一个圆底，不然图标压在背景画上根本看不见 */
@@ -425,55 +427,12 @@ img,.pix{image-rendering:pixelated;image-rendering:crisp-edges}
 
     <!-- ============ 待机页 ============ -->
     <div class="screen active" id="s-attract">
-      <div class="abs" id="brand">刘妈妈 · 胶东手工水饺</div>
       <div class="abs" id="title-art"></div>
-      <div class="abs" id="title-sub">20 秒 · 看谁包得多</div>
-
-      <div class="how">
-        <div class="step c9">
-          <div class="n">1</div>
-          <img src="assets/icon-hand-tap.png" alt="">
-          <div>按住左右键<br>挪动饺子皮</div>
-        </div>
-        <div class="step c9">
-          <div class="n">2</div>
-          <div class="pair">
-            <img src="assets/items/item-chive.png" alt="">
-            <img src="assets/items/item-shrimp.png" alt="">
-          </div>
-          <div>照着上面的馅<br>只接对的食材</div>
-        </div>
-        <div class="step c9">
-          <div class="n">3</div>
-          <img class="dp" src="assets/fillings/filling-chive-shrimp.png" alt="">
-          <div>凑齐就包成一只<br>换下一种馅</div>
-        </div>
-      </div>
-
-      <!-- 计分规则：开局前就说清楚，尤其是那枚硬币 -->
-      <div class="abs c9" id="rules">
-        <div class="r">
-          <img src="assets/items/item-chive.png" alt="">
-          <div class="k">接对食材</div><div class="v plus">+10 起</div>
-        </div>
-        <div class="r">
-          <img class="dp" src="assets/fillings/filling-corn-pork.png" alt="">
-          <div class="k">包成饺子</div><div class="v plus">+100 起</div>
-        </div>
-        <div class="r hi">
-          <img src="assets/items/item-coin.png" alt="">
-          <div class="k">接到硬币</div><div class="v plus">+60</div>
-        </div>
-        <div class="r">
-          <div class="x">✕</div>
-          <div class="k">接错食材</div><div class="v minus">−15</div>
-        </div>
-      </div>
 
       <div class="abs" id="best-line"></div>
 
-      <button class="btn abs pulse" style="top:1288px" id="btn-start">开 始 挑 战</button>
-      <button class="btn2 abs" style="top:1486px" id="btn-board">排 行 榜</button>
+      <button class="btn abs pulse" style="top:1331px" id="btn-start">开 始 挑 战 ▶</button>
+      <button class="btn2 abs" style="top:1524px" id="btn-board">排 行 榜</button>
 
       <div id="ops-hot"></div>
     </div>
@@ -1333,9 +1292,8 @@ function showBoard(){
 function backToAttract(){
   clearIdle();
   const b = Store.best();
-  $("#best-line").innerHTML = b
-    ? `本机最高 <b>${b.s}</b> 分 · <span class="who">${escapeHtml(b.n)}</span>`
-    : `还没人上榜 · 来当第一个`;
+  $("#best-line").innerHTML =
+    `<img class="crown" src="${assetUrl('crown.png')}" alt=""><span>最高纪录</span> <b>${b ? b.s : 0}</b>`;
   show("s-attract");
 }
 
